@@ -1,0 +1,303 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+ * ELECTORAL KIOSK DESIGN SYSTEM
+ * Authoritative, secure, and accessible design language
+ * Compliant with WCAG 2.1 AA standards for voting interfaces
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+@layer base {
+  :root {
+    /* Core palette - Deep government slate with gold accents */
+    --background: 222 47% 6%;
+    --foreground: 210 40% 96%;
+
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 96%;
+
+    --popover: 222 47% 10%;
+    --popover-foreground: 210 40% 96%;
+
+    /* Primary: Authoritative navy */
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 47% 6%;
+
+    /* Secondary: Muted slate */
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 90%;
+
+    /* Muted elements */
+    --muted: 217 33% 14%;
+    --muted-foreground: 215 20% 55%;
+
+    /* Accent: Secure gold */
+    --accent: 45 93% 47%;
+    --accent-foreground: 222 47% 6%;
+
+    /* Status colors */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --success: 142 76% 36%;
+    --success-foreground: 210 40% 98%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 222 47% 6%;
+
+    /* Borders and inputs */
+    --border: 217 33% 20%;
+    --input: 217 33% 17%;
+    --ring: 217 91% 60%;
+
+    --radius: 0.5rem;
+
+    /* Custom electoral tokens */
+    --electoral-gold: 45 93% 47%;
+    --electoral-navy: 222 47% 11%;
+    --electoral-steel: 215 28% 17%;
+    --electoral-slate: 217 33% 25%;
+    --secure-green: 142 76% 36%;
+    --alert-red: 0 72% 51%;
+    
+    /* Gradients */
+    --gradient-secure: linear-gradient(135deg, hsl(217 91% 60% / 0.15), hsl(45 93% 47% / 0.1));
+    --gradient-header: linear-gradient(180deg, hsl(222 47% 11%), hsl(222 47% 6%));
+    --gradient-card: linear-gradient(145deg, hsl(222 47% 10%), hsl(222 47% 7%));
+    --gradient-gold: linear-gradient(135deg, hsl(45 93% 47%), hsl(38 92% 50%));
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 8px hsl(222 47% 4% / 0.5);
+    --shadow-md: 0 8px 24px hsl(222 47% 4% / 0.6);
+    --shadow-lg: 0 16px 48px hsl(222 47% 4% / 0.7);
+    --shadow-glow: 0 0 40px hsl(217 91% 60% / 0.2);
+    --shadow-gold: 0 0 30px hsl(45 93% 47% / 0.3);
+
+    /* Typography */
+    --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+
+    /* Sidebar - matching theme */
+    --sidebar-background: 222 47% 8%;
+    --sidebar-foreground: 210 40% 90%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 222 47% 6%;
+    --sidebar-accent: 217 33% 17%;
+    --sidebar-accent-foreground: 210 40% 90%;
+    --sidebar-border: 217 33% 20%;
+    --sidebar-ring: 217 91% 60%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-family: var(--font-sans);
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "ss02";
+  }
+
+  /* Kiosk mode styles - prevent text selection and context menus */
+  .kiosk-mode {
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+  }
+
+  .kiosk-mode * {
+    cursor: inherit;
+  }
+
+  .kiosk-mode button,
+  .kiosk-mode [role="button"],
+  .kiosk-mode input {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  /* Electoral branded components */
+  .electoral-card {
+    @apply rounded-lg border border-border bg-card p-6;
+    background: var(--gradient-card);
+    box-shadow: var(--shadow-md);
+  }
+
+  .electoral-header {
+    background: var(--gradient-header);
+    @apply border-b border-border;
+  }
+
+  .electoral-badge {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium;
+    background: hsl(var(--electoral-steel));
+    border: 1px solid hsl(var(--border));
+  }
+
+  .electoral-badge-secure {
+    background: hsl(var(--secure-green) / 0.15);
+    border-color: hsl(var(--secure-green) / 0.3);
+    color: hsl(var(--secure-green));
+  }
+
+  .electoral-badge-warning {
+    background: hsl(var(--warning) / 0.15);
+    border-color: hsl(var(--warning) / 0.3);
+    color: hsl(var(--warning));
+  }
+
+  /* Secure input styling */
+  .secure-input {
+    @apply w-full rounded-lg border-2 border-border bg-background px-4 py-3 text-lg font-mono transition-all duration-200;
+    @apply focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20;
+  }
+
+  .secure-input::placeholder {
+    @apply text-muted-foreground font-sans;
+  }
+
+  /* Ballot option styling */
+  .ballot-option {
+    @apply relative rounded-lg border-2 border-border bg-card p-5 transition-all duration-200;
+    @apply hover:border-primary/50 hover:bg-secondary/50;
+    @apply cursor-pointer;
+  }
+
+  .ballot-option.selected {
+    @apply border-primary bg-primary/10;
+    box-shadow: var(--shadow-glow);
+  }
+
+  .ballot-option .radio-indicator {
+    @apply h-6 w-6 rounded-full border-2 border-muted-foreground transition-all duration-200;
+  }
+
+  .ballot-option.selected .radio-indicator {
+    @apply border-primary bg-primary;
+  }
+
+  /* Blockchain visualization */
+  .blockchain-block {
+    @apply rounded-lg border border-border bg-card p-4 font-mono text-sm;
+    background: var(--gradient-card);
+  }
+
+  .blockchain-hash {
+    @apply text-xs text-muted-foreground break-all;
+    font-family: var(--font-mono);
+  }
+
+  /* Status indicators */
+  .status-indicator {
+    @apply h-2.5 w-2.5 rounded-full;
+  }
+
+  .status-indicator.online {
+    @apply bg-green-500;
+    box-shadow: 0 0 8px hsl(142 76% 36% / 0.6);
+  }
+
+  .status-indicator.offline {
+    @apply bg-red-500;
+    box-shadow: 0 0 8px hsl(0 72% 51% / 0.6);
+  }
+
+  .status-indicator.warning {
+    @apply bg-yellow-500;
+    box-shadow: 0 0 8px hsl(38 92% 50% / 0.6);
+  }
+
+  /* Animated secure border */
+  .secure-border {
+    position: relative;
+  }
+
+  .secure-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(
+      90deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--accent)) 50%,
+      hsl(var(--primary)) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: border-rotate 4s linear infinite;
+  }
+
+  @keyframes border-rotate {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  /* Seal/emblem styling */
+  .electoral-seal {
+    @apply relative flex h-20 w-20 items-center justify-center rounded-full;
+    background: var(--gradient-gold);
+    box-shadow: var(--shadow-gold), inset 0 2px 4px rgba(255,255,255,0.2);
+  }
+
+  /* PIN input dots */
+  .pin-dots {
+    @apply flex gap-3;
+  }
+
+  .pin-dot {
+    @apply h-4 w-4 rounded-full border-2 border-muted-foreground transition-all duration-150;
+  }
+
+  .pin-dot.filled {
+    @apply border-primary bg-primary;
+  }
+}
+
+@layer utilities {
+  /* Custom scrollbar for kiosk */
+  .scrollbar-electoral {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted)) transparent;
+  }
+
+  .scrollbar-electoral::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-electoral::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-electoral::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted));
+    border-radius: 3px;
+  }
+
+  /* Glow effects */
+  .glow-primary {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .glow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+
+  /* Text gradient */
+  .text-gradient-gold {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
